@@ -10,8 +10,8 @@ module.exports = async function seedProducts() {
         const cats = [
             { name: 'Sarees', slug: 'sarees', description: 'Beautiful Indian sarees', order: 1 },
             { name: 'Jewellery', slug: 'jewellery', description: 'Stunning jewellery sets', order: 2 },
-            { name: 'Ethnic Sets', slug: 'ethnic-sets', description: 'Coordinated ethnic wear sets', order: 3 },
-            { name: 'Fashion', slug: 'fashion', description: 'Trendy dresses and fashion wear for women', order: 4 },
+            { name: 'Fashion', slug: 'fashion', description: 'Trendy dresses and fashion wear for women', order: 3 },
+            { name: 'Footwear', slug: 'footwear', description: 'Stylish ladies and girls footwear', order: 4 },
         ];
 
         const createdCats = {};
@@ -36,9 +36,9 @@ module.exports = async function seedProducts() {
             { name: 'Pearl Drop Necklace', description: 'Freshwater pearl drop necklace with 925 silver chain, minimalist and chic', price: 449, originalPrice: 899, category: createdCats['jewellery']._id, categoryName: 'Jewellery', meeshoLink: 'https://www.meesho.com/pearl-drop-necklace/p/9', isFeatured: true, isTrending: false, badge: '', rating: 4.5, order: 5, images: ['https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=500'], tags: ['pearl', 'necklace', 'silver'] },
             { name: 'Boho Stack Bangles', description: 'Set of 6 oxidized silver bangles with intricate tribal patterns', price: 199, originalPrice: 399, category: createdCats['jewellery']._id, categoryName: 'Jewellery', meeshoLink: 'https://www.meesho.com/boho-bangles/p/10', isFeatured: false, isTrending: true, badge: 'Sale', rating: 4.3, order: 6, images: ['https://images.unsplash.com/photo-1611591437281-460bfbe1220a?w=500'], tags: ['bangles', 'oxidized', 'boho'] },
 
-            // Ethnic Sets
-            { name: 'Embroidered Salwar Kameez', description: 'Elegant embroidered salwar kameez with dupatta, festive wear', price: 1099, originalPrice: 2199, category: createdCats['ethnic-sets']._id, categoryName: 'Ethnic Sets', meeshoLink: 'https://www.meesho.com/embroidered-salwar-kameez/p/11', isFeatured: true, isTrending: false, badge: 'New', rating: 4.6, order: 1, images: ['https://images.unsplash.com/photo-1581044777550-4cfa60707c03?w=500'], tags: ['salwar', 'embroidered', 'festive'] },
-            { name: 'Anarkali Suit Set', description: 'Flowy Anarkali suit with intricate zari work and churidar', price: 1499, originalPrice: 2999, category: createdCats['ethnic-sets']._id, categoryName: 'Ethnic Sets', meeshoLink: 'https://www.meesho.com/anarkali-suit-set/p/12', isFeatured: true, isTrending: true, badge: 'Hot', rating: 4.7, order: 2, images: ['https://images.unsplash.com/photo-1487222477894-8943e31ef7b2?w=500'], tags: ['anarkali', 'zari', 'churidar'] },
+            // Footwear
+            { name: 'Embellished Block Heels', description: 'Elegant embellished block heels, perfect for parties and weddings', price: 899, originalPrice: 1599, category: createdCats['footwear']._id, categoryName: 'Footwear', meeshoLink: 'https://www.meesho.com/block-heels/p/11', isFeatured: true, isTrending: false, badge: 'New', rating: 4.6, order: 1, images: ['https://images.unsplash.com/photo-1543163521-1bf539c55dd2?w=500'], tags: ['heels', 'footwear', 'party'] },
+            { name: 'Casual White Sneakers', description: 'Comfortable casual white sneakers for girls, matches every outfit', price: 699, originalPrice: 1299, category: createdCats['footwear']._id, categoryName: 'Footwear', meeshoLink: 'https://www.meesho.com/white-sneakers/p/12', isFeatured: true, isTrending: true, badge: 'Hot', rating: 4.7, order: 2, images: ['https://images.unsplash.com/photo-1549298916-b41d501d3772?w=500'], tags: ['sneakers', 'casual', 'white'] },
 
             // Fashion — Dresses
             { name: 'Floral Wrap Midi Dress', description: 'Elegant floral printed wrap midi dress with flutter sleeves, perfect for brunch, parties and casual outings', price: 799, originalPrice: 1599, category: createdCats['fashion']._id, categoryName: 'Fashion', meeshoLink: 'https://www.meesho.com/floral-wrap-midi-dress/p/13', isFeatured: true, isTrending: true, badge: 'Trending', rating: 4.7, order: 1, images: ['https://images.unsplash.com/photo-1572804013427-4d7ca7268217?w=500'], tags: ['dress', 'floral', 'midi', 'wrap'] },
