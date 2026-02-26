@@ -44,6 +44,42 @@ app.get('/api/health', (req, res) => {
 mongoose.connect(process.env.MONGO_URI)
     .then(async () => {
         console.log('✅ MongoDB connected');
+
+        // --- TEMPORARY MIGRATION: Merge Jewellery Cats ---
+        try {
+            const Category = require('./models/Category');
+            const Product = require('./models/Product');
+
+            let jewelleryCat = await Category.findOne({ slug: 'jewellery' });
+            if (!jewelleryCat) {
+                jewelleryCat = await Category.create({
+                    name: 'Jewellery',
+                    slug: 'jewellery',
+                    description: 'Stunning jewellery sets',
+                    order: 2
+                });
+                console.log('✅ Created Jewellery category');
+            }
+
+            const oldCats = await Category.find({ slug: { $in: ['bridal-jewellery', 'daily-wear-jewellery'] } });
+            if (oldCats.length > 0) {
+                const oldCatIds = oldCats.map(c => c._id);
+
+                // Update products
+                await Product.updateMany(
+                    { category: { $in: oldCatIds } },
+                    { $set: { category: jewelleryCat._id, categoryName: 'Jewellery' } }
+                );
+
+                // Delete old categories
+                await Category.deleteMany({ _id: { $in: oldCatIds } });
+                console.log('✅ Migrated products and deleted old Bridal/Daily Wear categories');
+            }
+        } catch (err) {
+            console.error('Migration error:', err);
+        }
+        // -------------------------------------------------
+
         // Seed admin user if not exists
         await require('./utils/seedAdmin')();
         // Seed sample products if none
