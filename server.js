@@ -118,8 +118,8 @@ mongoose.connect(process.env.MONGO_URI)
 
         // Seed admin user if not exists
         await require('./utils/seedAdmin')();
-        // Seed sample products if none
-        await require('./utils/seedProducts')();
+        // REMOVED: Seed sample products if none to prevent reappearing deleted products
+        // await require('./utils/seedProducts')();
     })
     .catch(err => console.error('❌ MongoDB connection error:', err));
 
