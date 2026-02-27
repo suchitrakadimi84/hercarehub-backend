@@ -34,7 +34,13 @@ app.use('/api/settings', require('./routes/settings'));
 
 // Health check
 app.get('/api/health', (req, res) => {
-    res.json({ status: 'ok', message: 'HerCare Hub API is running' });
+    const { isCloudinaryConfigured } = require('./utils/cloudinary');
+    res.json({
+        status: 'ok',
+        message: 'HerCare Hub API is running',
+        storage: isCloudinaryConfigured() ? 'Cloudinary (Cloud)' : 'Local Disk (Warning: Ephemeral Storage)',
+        cloudinary: isCloudinaryConfigured()
+    });
 });
 
 // MongoDB Connection

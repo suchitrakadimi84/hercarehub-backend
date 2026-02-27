@@ -123,21 +123,34 @@ router.put('/:id', auth, upload.array('images', 5), async (req, res) => {
         if (rating !== undefined) updateData.rating = Number(rating);
         if (order !== undefined) updateData.order = Number(order);
 
-        // Image update: only replace images if a new file was uploaded or an explicit URL list was sent
+        // Image update logic
         if (req.files && req.files.length > 0) {
-            // Delete old Cloudinary images before replacing
+            // New files uploaded - replace old ones
             const existing = await Product.findById(req.params.id).select('images').lean();
             if (existing?.images) {
+                // Force delete from Cloudinary to keep storage clean
                 await Promise.all(existing.images.map(url => deleteFromCloudinary(url)));
             }
             updateData.images = req.files.map(f => getFileUrl(f));
         } else if (req.body.images) {
-            const parsed = typeof req.body.images === 'string' ? JSON.parse(req.body.images) : req.body.images;
-            if (Array.isArray(parsed) && parsed.length > 0) {
-                updateData.images = parsed;
+            // If images were sent as a string/array (likely existing images)
+            try {
+                const parsed = typeof req.body.images === 'string' 
+                    ? JSON.parse(req.body.images) 
+                    : req.body.images;
+                
+                if (Array.isArray(parsed) && parsed.length > 0) {
+                    updateData.images = parsed;
+                } else if (typeof parsed === 'string' && parsed.length > 0) {
+                    updateData.images = [parsed];
+                }
+            } catch (e) {
+                // Fallback for single strings that aren't JSON
+                if (typeof req.body.images === 'string' && req.body.images.length > 0) {
+                    updateData.images = [req.body.images];
+                }
             }
         }
-        // No new upload and no body.images → existing images preserved as-is
 
         const product = await Product.findByIdAndUpdate(req.params.id, updateData, { new: true });
         if (!product) return res.status(404).json({ message: 'Product not found' });
