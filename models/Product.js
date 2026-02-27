@@ -19,4 +19,10 @@ const ProductSchema = new mongoose.Schema({
     reviewCount: { type: Number, default: 0 }
 }, { timestamps: true });
 
+// Performance indexes — speeds up homepage & category page queries
+ProductSchema.index({ isFeatured: 1, createdAt: -1 });
+ProductSchema.index({ isTrending: 1, categoryName: 1 });
+ProductSchema.index({ categoryName: 1, order: 1, createdAt: -1 });
+ProductSchema.index({ name: 'text', description: 'text', tags: 'text' });
+
 module.exports = mongoose.model('Product', ProductSchema);
